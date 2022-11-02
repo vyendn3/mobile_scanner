@@ -191,7 +191,7 @@ class MobileScanner(private val activity: Activity, private val textureRegistry:
     private fun start(call: MethodCall, result: MethodChannel.Result) {
         if (camera?.cameraInfo != null && preview != null && textureEntry != null) {
             val resolution = preview!!.resolutionInfo!!.resolution
-            val portrait = camera!!.cameraInfo.sensorRotationDegrees % 180 == 0
+            val portrait =  true //camera!!.cameraInfo.sensorRotationDegrees % 180 == 0
             val width = resolution.width.toDouble()
             val height = resolution.height.toDouble()
             val size = if (portrait) mapOf(
