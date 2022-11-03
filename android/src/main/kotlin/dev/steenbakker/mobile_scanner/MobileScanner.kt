@@ -128,11 +128,13 @@ class MobileScanner(private val activity: Activity, private val textureRegistry:
 //                isAnalyzing = true
                 val barcodeMap = barcodes.map { barcode -> barcode.data }
                 if (barcodeMap.isNotEmpty()) {
-                    sink?.success(mapOf(
-                        "name" to "barcode",
-                        "data" to barcodeMap,
-                        "image" to mediaImage.toByteArray()
-                    ))
+                    sink?.success(
+                        mapOf(
+                            "name" to "barcode",
+                            "data" to barcodeMap,
+                            "image" to mediaImage.toByteArray()
+                        )
+                    )
                 }
 //                for (barcode in barcodes) {
 ////                    if (lastScanned?.contains(barcodes.first) == true) continue;
@@ -159,10 +161,14 @@ class MobileScanner(private val activity: Activity, private val textureRegistry:
 //                }
 //                isAnalyzing = false
             }
-            .addOnFailureListener { e -> sink?.success(mapOf(
-                "name" to "error",
-                "data" to e.localizedMessage
-            )) }
+            .addOnFailureListener { e ->
+                sink?.success(
+                    mapOf(
+                        "name" to "error",
+                        "data" to e.localizedMessage
+                    )
+                )
+            }
             .addOnCompleteListener { imageProxy.close() }
     }
 
@@ -191,7 +197,7 @@ class MobileScanner(private val activity: Activity, private val textureRegistry:
     private fun start(call: MethodCall, result: MethodChannel.Result) {
         if (camera?.cameraInfo != null && preview != null && textureEntry != null) {
             val resolution = preview!!.resolutionInfo!!.resolution
-            val portrait =  true //camera!!.cameraInfo.sensorRotationDegrees % 180 == 0
+            val portrait = camera!!.cameraInfo.sensorRotationDegrees % 180 == 0
             val width = resolution.width.toDouble()
             val height = resolution.height.toDouble()
             val size = if (portrait) mapOf(
